@@ -1,0 +1,150 @@
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calculadora de Pace - Jair Filho</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #111;
+      color: white;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background-color: #f97316;
+      padding: 20px;
+      text-align: center;
+    }
+    header img {
+      max-width: 300px;
+      height: auto;
+      border-radius: 10px;
+      margin: 0 auto;
+      display: block;
+    }
+    header h1 {
+      margin: 10px 0 5px;
+    }
+    .container {
+      padding: 20px;
+      max-width: 600px;
+      margin: auto;
+    }
+    input, button {
+      padding: 10px;
+      width: 100%;
+      margin: 10px 0;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+    }
+    button {
+      background-color: #f97316;
+      color: white;
+      cursor: pointer;
+    }
+    .resultado {
+      margin-top: 20px;
+      background-color: #222;
+      padding: 15px;
+      border-radius: 5px;
+    }
+    footer {
+      background-color: #f97316;
+      text-align: center;
+      padding: 10px;
+      margin-top: 30px;
+    }
+    .redes {
+      margin-top: 10px;
+    }
+    .redes a {
+      color: white;
+      margin: 0 10px;
+      text-decoration: none;
+    }
+    .pace-inputs {
+      display: flex;
+      gap: 10px;
+    }
+    .pace-inputs input {
+      flex: 1;
+    }
+    .botao-instagram {
+      display: inline-block;
+      background-color: #000000;
+      color: white;
+      padding: 12px 20px;
+      margin: 10px auto;
+      border-radius: 5px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <img src="https://www.dropbox.com/scl/fi/co16xgynqpbr00gv4zz1r/Screenshot_20210721-061829-2.png?rlkey=ddl4w5rott4b0vvf0evsp78n0&raw=1" alt="Jair Filho">
+    <h1>JAIR FILHO - ASSESSORIA ESPORTIVA</h1>
+    <p>Aqui você vai encontrar tudo que precisa para descobrir como correr da melhor forma e saber o ritmo de cada km que você deseja conquistar na sua prova ou treino!</p>
+  </header>
+
+  <div class="container">
+    <h2>Calculadora de Pace</h2>
+    <p>Insira abaixo o pace que você deseja e iremos lhe mostrar as parciais para as principais distâncias da corrida!</p>
+    <p>Informe seu pace (min/km e seg/km) e veja o tempo estimado por distância:</p>
+
+    <div class="pace-inputs">
+      <input type="number" id="minutos" placeholder="Minutos (Ex: 5)">
+      <input type="number" id="segundos" placeholder="Segundos (Ex: 30)">
+    </div>
+
+    <button onclick="calcularPace()">Calcular</button>
+
+    <div class="resultado" id="resultado"></div>
+
+    <p><em>"Sua disciplina é seu produto, seu nome é sua marca, e seus hábitos são seus investimentos. A. J. Brown"</em></p>
+  </div>
+
+  <footer>
+    <p>Quer saber mais sobre corrida ou uma planilha de treino personalizada?</p>
+    <a href="https://wa.me/5581984145575?text=Olá%2C+quero+agendar+uma+consultoria+online+com+Jair+Filho" target="_blank" style="display:block;text-align:center;background-color:#000;color:white;padding:12px 20px;margin:10px auto;border-radius:5px;text-decoration:none;font-weight:bold;max-width:300px;">Agendar Consultoria no WhatsApp</a>
+    <a href="https://instagram.com/jairzinhotreinador" target="_blank" class="botao-instagram">Siga no Instagram</a>
+    <p>Fale comigo:</p>
+    <div class="redes">
+      <a href="https://wa.me/5581984145575" target="_blank">WhatsApp</a>
+      <a href="https://instagram.com/jairzinhotreinador" target="_blank">@jairzinhotreinador</a>
+      <span>📞 (81) 98414-5575</span>
+    </div>
+  </footer>
+
+  <script>
+    function calcularPace() {
+      const minutos = parseInt(document.getElementById("minutos").value);
+      const segundos = parseInt(document.getElementById("segundos").value);
+
+      if (isNaN(minutos) || isNaN(segundos) || minutos < 0 || segundos < 0 || segundos >= 60) {
+        document.getElementById("resultado").innerHTML = "Por favor, insira um pace válido (min e seg).";
+        return;
+      }
+
+      const paceTotal = minutos + (segundos / 60);
+      const distancias = [1, 5, 10, 15, 21.097, 42.195];
+      let html = "<h3>Tempos estimados:</h3><ul>";
+      distancias.forEach(dist => {
+        const tempo = paceTotal * dist;
+        const totalMin = Math.floor(tempo);
+        const totalSeg = Math.round((tempo - totalMin) * 60);
+        const horas = Math.floor(totalMin / 60);
+        const minutos = totalMin % 60;
+        html += `<li>${dist} km: ${horas}h ${minutos}m ${totalSeg}s</li>`;
+      });
+      html += "</ul>";
+      document.getElementById("resultado").innerHTML = html;
+    }
+  </script>
+</body>
+</html>
